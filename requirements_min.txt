@@ -1,0 +1,9 @@
+# Minimal requirements for create_dataset.py (no ML/training dependencies)
+
+osmnx
+geopandas
+pyogrio
+pandas
+numpy
+shapely
+psutil

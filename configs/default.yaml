@@ -1,0 +1,65 @@
+# OSMGraphCLIP Configuration
+
+# Model parameters
+model:
+  class_path: osmgraphclip.lightning_module.OSMGraphCLIPLightningModule
+  init_args:
+    embed_dim: 256
+    graph_out_chans: 256
+    graph_aggr_embed_dim: 256
+    # node_embedding_dim must match the embedding backend used when building the dataset:
+    #   512 for clip (clip-vit-base-patch16, default)
+    #   384 for sbert (all-MiniLM-L6-v2, default)
+    #   768 for sbert (all-mpnet-base-v2)
+    node_embedding_dim: 384
+    le_type: sphericalharmonics  # SatCLIP-style orthogonal spherical harmonics encoder
+    pe_type: siren  # Sinusoidal representation network (SIREN)
+    frequency_num: 16
+    max_radius: 260
+    min_radius: 1
+    legendre_polys: 10  # paper variants: 10 (lower-res) or 40 (higher-res)
+    harmonics_calculation: analytic  # 'analytic' or other methods
+    num_hidden_layers: 2
+    capacity: 512  # hidden width of SIREN layers
+    temperature: 0.07
+    learning_rate: 0.0001
+    weight_decay: 0.01
+
+# Data module parameters
+data:
+  class_path: osmgraphclip.data.osm_dataset.OsmGeoDataModule
+  init_args:
+    data_dir: satclip_osm_dataset
+    batch_size: 256
+    num_workers: 8
+    val_random_split_fraction: 0.1
+    transform: default
+    mode: both
+    # resolution_mode controls how multi-resolution datasets are used:
+    #   "all"    — every (location, level) row is a separate training sample (default)
+    #   "finest" — only the finest (smallest bbox) level per location is used
+    resolution_mode: finest
+
+seed_everything: 17
+
+# Trainer parameters
+trainer:
+  max_epochs: 500
+  devices: 1
+  accelerator: auto
+  precision: 32-true  # Use mixed precision or full precision
+  log_every_n_steps: 1
+  accumulate_grad_batches: 1
+  check_val_every_n_epoch: 1
+  logger:
+    - class_path: osmgraphclip.loggers.AppendCSVLogger
+      init_args:
+        save_dir: logs
+        name: osmgraphclip
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        monitor: "val_loss"
+        save_last: true
+        filename: "{epoch}-{val_loss:.2f}"
+watchmodel: True

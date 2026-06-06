@@ -1,0 +1,14 @@
+# Location encoder inference (infer.py, osmgraphclip/load_lightweight.py)
+torch
+numpy
+einops
+huggingface_hub
+
+# Global map creation (create_global_map.py)
+scikit-learn
+umap-learn
+tqdm
+matplotlib
+scipy
+
+cartopy

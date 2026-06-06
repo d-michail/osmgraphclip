@@ -1,0 +1,68 @@
+# Multiscale OSMGraphCLIP — GAT graph encoder + BandEncoder transformer
+# Run: python train.py --config configs/multiscale.yaml
+
+model:
+  class_path: osmgraphclip.lightning_module_multiscale.OSMGraphCLIPMultiscaleLightningModule
+  init_args:
+    embed_dim: 256
+    graph_out_chans: 256
+    graph_aggr_embed_dim: 256
+    # node_embedding_dim must match the embedding backend used when building the dataset:
+    #   512 for clip (clip-vit-base-patch16, default)
+    #   384 for sbert (all-MiniLM-L6-v2, default)
+    node_embedding_dim: 384
+    le_type: sphericalharmonics
+    pe_type: siren
+    frequency_num: 16
+    max_radius: 260
+    min_radius: 1
+    legendre_polys: 10
+    harmonics_calculation: analytic
+    num_hidden_layers: 2
+    capacity: 512
+    temperature: 0.07
+    learning_rate: 0.0001
+    weight_decay: 0.01
+    # BandEncoder parameters
+    band_encoder_d_model: 256
+    band_encoder_n_heads: 4
+    band_encoder_n_layers: 2
+    # sbert_dim must match --embedding-model used in create_multiscale_dataset.py:
+    #   384 for all-MiniLM-L6-v2 (default)
+    #   768 for all-mpnet-base-v2
+    sbert_dim: 384
+    band_fusion: concat
+
+data:
+  class_path: osmgraphclip.data.multiscale_dataset.MultiscaleOsmGeoDataModule
+  init_args:
+    data_dir: multiscale_dataset
+    batch_size: 256
+    num_workers: 8
+    val_random_split_fraction: 0.1
+    transform: default
+    mode: both
+    resolution_mode: finest
+
+seed_everything: 17
+
+trainer:
+  max_epochs: 500
+  devices: 1
+  accelerator: auto
+  precision: 32-true
+  log_every_n_steps: 1
+  accumulate_grad_batches: 1
+  check_val_every_n_epoch: 1
+  logger:
+    - class_path: osmgraphclip.loggers.AppendCSVLogger
+      init_args:
+        save_dir: logs
+        name: osmgraphclip_multiscale
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+      init_args:
+        monitor: "val_loss"
+        save_last: true
+        filename: "{epoch}-{val_loss:.2f}"
+watchmodel: True

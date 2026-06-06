@@ -1,0 +1,11 @@
+cache/
+__pycache__/
+.env
+.venv
+lightning_logs/
+logs/
+
+# PostGIS data
+pgdata/
+pbf/*.pbf
+pbf/*.osm.pbf

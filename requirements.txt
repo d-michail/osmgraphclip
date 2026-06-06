@@ -1,0 +1,56 @@
+# Core PyTorch & ML
+torch==2.8.0+cu129
+
+--extra-index-url https://download.pytorch.org/whl/cu129
+-f https://data.pyg.org/whl/torch-2.8.0+cu129.html
+
+torch_geometric
+pyg_lib
+torch_scatter
+torch_sparse
+torch_cluster
+torch_spline_conv
+
+numpy
+psutil
+scipy
+scikit-learn>=1.2
+matplotlib>=3.9
+
+# Deep Learning & Vision
+transformers
+sentence-transformers
+timm
+einops
+albumentations
+
+# Training & Experiment Management
+lightning
+torchmetrics>=1.0
+jsonargparse
+tensorboard
+litdata==0.2.61
+
+# Geospatial & GIS
+osmnx
+geopandas
+shapely
+pandas
+rasterio
+rioxarray
+networkx
+fiona
+torchgeo
+
+# Symbolic Math (for positional encoding generation)
+sympy
+
+# PostGIS backend
+psycopg2-binary>=2.9
+python-dotenv>=1.0
+
+# H3 hierarchical geospatial grid (used by create_global_dataset.py)
+h3>=4.0
+
+#
+pyarrow
