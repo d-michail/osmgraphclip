@@ -14,10 +14,10 @@ Pretrained checkpoints are available on HuggingFace under `d-michail/`:
 
 | Model | HuggingFace | Legendre polys | Multiscale bands |
 |---|---|---|---|
-| OSMGraphCLIP-A-L10 | [d-michail/OSMGraphCLIP-A-L10](https://huggingface.co/d-michail/OSMGraphCLIP-A-L10) | 10 | no |
-| OSMGraphCLIP-A-L40 | [d-michail/OSMGraphCLIP-A-L40](https://huggingface.co/d-michail/OSMGraphCLIP-A-L40) | 40 | no |
-| OSMGraphCLIP-MS-L10 | [d-michail/OSMGraphCLIP-MS-L10](https://huggingface.co/d-michail/OSMGraphCLIP-MS-L10) | 10 | yes |
 | OSMGraphCLIP-MS-L40 | [d-michail/OSMGraphCLIP-MS-L40](https://huggingface.co/d-michail/OSMGraphCLIP-MS-L40) | 40 | yes |
+| OSMGraphCLIP-MS-L10 | [d-michail/OSMGraphCLIP-MS-L10](https://huggingface.co/d-michail/OSMGraphCLIP-MS-L10) | 10 | yes |
+| OSMGraphCLIP-A-L40 | [d-michail/OSMGraphCLIP-A-L40](https://huggingface.co/d-michail/OSMGraphCLIP-A-L40) | 40 | no |
+| OSMGraphCLIP-A-L10 | [d-michail/OSMGraphCLIP-A-L10](https://huggingface.co/d-michail/OSMGraphCLIP-A-L10) | 10 | no |
 
 ## Training dataset
 
@@ -113,6 +113,7 @@ See `AGENTS.md` for the full flag reference for all scripts.
 ## Acknowledgements
 
 The OSM graph construction code (`osmgraphclip/osm_to_graph.py`) is adapted from [GeoLink](https://github.com/bailubin/GeoLink_NeurIPS2025).
+Location encoder code is adapted from [SatCLIP](https://github.com/microsoft/satclip).
 
 ## Current caveats
 
