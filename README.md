@@ -1,4 +1,6 @@
-# OSMGraphCLIP
+# OSMGraphCLIP: Learning Global Location Representations from OpenStreetMap Graphs
+
+[![arXiv](https://img.shields.io/badge/arXiv-2606.08046-b31b1b.svg)](https://arxiv.org/abs/2606.08046)
 
 **OSMGraphCLIP** is a CLIP-style contrastive model that learns joint embeddings of OpenStreetMap (OSM) heterogeneous graphs and geographic coordinates, producing a global location encoder.
 
@@ -7,6 +9,10 @@ The model is trained by aligning two encoders:
 - a **location encoder** (`LocationEncoder`) that maps geographic coordinates through spherical-harmonic positional encodings and a SIREN network.
 
 Contrastive training with symmetric cross-entropy drives matching (graph, coordinate) pairs to similar embeddings. The location encoder alone is sufficient for inference — no OSM data is needed at query time.
+
+## Method
+
+![OSMGraphCLIP architecture](figures/architecture.png)
 
 ## Pretrained models
 
@@ -109,6 +115,20 @@ See `AGENTS.md` for the full flag reference for all scripts.
 - `infer.py` — encodes a single `(lat, lon)` with a trained or HuggingFace checkpoint
 - `train.py` — LightningCLI training entry point
 - `osmgraphclip/` — core model, loss, data modules, OSM graph builders, positional encoders, and band feature extractor
+
+## Citation
+
+```bibtex
+@misc{michail2026osmgraphcliplearninggloballocation,
+      title={OSMGraphCLIP: Learning Global Location Representations from OpenStreetMap Graphs}, 
+      author={Dimitrios Michail and Eleni Saka and Ioannis Giannopoulos and Ioannis Papoutsis},
+      year={2026},
+      eprint={2606.08046},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2606.08046}, 
+}
+```
 
 ## Acknowledgements
 
