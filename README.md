@@ -32,6 +32,8 @@ The pretrained encoders were trained on a dataset of approximately 200k globally
 - `data/satclip_locations.csv` — primary location set
 - `data/h3_locations.csv` — globally-diverse H3-sampled locations
 
+The full dataset used to train the MS variants (multi-scale OSM graphs paired with coordinates) is available on HuggingFace: [d-michail/OSMGraphCLIP-MS](https://huggingface.co/datasets/d-michail/OSMGraphCLIP-MS).
+
 ## Install
 
 ```bash
